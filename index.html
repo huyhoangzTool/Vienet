@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="web-title">Vienet - Công cụ làm nét ảnh online miễn phí</title>
+    <meta name="description" id="web-desc" content="Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="IMG_0685" type="image/png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#F9F6EE',
+                            200: '#EFECD8',
+                        },
+                        chocolate: {
+                            light: '#8C6D53',
+                            hover: '#755943',
+                            dark: '#5A4331'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter / Be Vietnam Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .liquid-glass-light {
+            background: rgba(253, 251, 247, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(140, 109, 83, 0.15);
+        }
+        .liquid-glass-dark {
+            background: rgba(24, 24, 27, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(140, 109, 83, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-cream-50 dark:bg-[#121212] text-zinc-800 dark:text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-chocolate-light selection:text-white">
+
+    <!-- GEO-IP MODAL POPUP -->
+    <div id="geo-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden px-4">
+        <div class="liquid-glass-light dark:liquid-glass-dark rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl transform transition-all animate-in fade-in zoom-in duration-300">
+            <div class="text-center mb-6">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-chocolate-light/10 text-chocolate-light dark:text-amber-300 mb-2" id="popup-badge">Xác thực quyền truy cập</span>
+                <h3 class="text-xl sm:text-2xl font-bold mb-2" id="popup-title">// Câu hỏi dành cho bạn!</h3>
+                <p class="text-base font-medium text-zinc-700 dark:text-zinc-200" id="popup-question">Hòn đảo Hoàng Sa và hòn đảo Trường Sa thuộc nước nào?</p>
+            </div>
+            
+            <!-- Map Illustration Placeholder -->
+            <div class="mb-6 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 p-3 flex flex-col items-center">
+                <div class="w-full h-36 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <!-- Simulated Map Graphic -->
+                    <svg class="w-16 h-16 text-chocolate-light opacity-60 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span class="absolute bottom-2 text-xs text-zinc-500 dark:text-zinc-400 font-medium">Bản đồ Việt Nam & Biển đảo</span>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <input type="text" id="geo-answer-input" placeholder="Nhập đáp án..." class="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-chocolate-light text-center text-lg font-medium">
+                    <p id="geo-error" class="text-rose-500 text-xs mt-1.5 text-center hidden"></p>
+                </div>
+                <button onclick="verifyGeoAnswer()" id="geo-submit-btn" class="w-full py-3.5 bg-chocolate-light hover:bg-chocolate-hover text-white font-semibold rounded-xl shadow-lg transition-all duration-200">
+                    Xác nhận
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="w-full py-4 px-6 sm:px-12 flex items-center justify-between border-b border-zinc-200/60 dark:border-zinc-800/60 liquid-glass-light dark:liquid-glass-dark sticky top-0 z-40">
+        <div class="flex items-center space-x-3">
+            <!-- Logo light/dark -->
+            <img src="IMG_0684" alt="Vienet Logo" id="site-logo" class="h-9 w-auto dark:hidden object-contain" onerror="this.src='https://api.iconify.design/lucide:sparkles.svg?color=%238C6D53'">
+            <img src="IMG_0683" alt="Vienet Logo" id="site-logo-dark" class="h-9 w-auto hidden dark:block object-contain" onerror="this.src='https://api.iconify.design/lucide:sparkles.svg?color=%23ffffff'">
+            <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-chocolate-light to-amber-600 bg-clip-text text-transparent">Vienet</span>
+        </div>
+
+        <div class="flex items-center space-x-3 sm:space-x-4">
+            <!-- Language Selector -->
+            <select id="lang-switcher" onchange="changeLanguage(this.value)" class="text-xs sm:text-sm font-medium px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 focus:outline-none focus:ring-2 focus:ring-chocolate-light cursor-pointer">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+                <option value="zh">中國（廣東）</option>
+                <option value="ko">한국어</option>
+                <option value="es">España</option>
+            </select>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors" aria-label="Toggle Theme">
+                <!-- Sun Icon -->
+                <svg class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <!-- Moon Icon -->
+                <svg class="w-5 h-5 block dark:hidden text-chocolate-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-4xl flex flex-col items-center justify-center">
+        <!-- Hero Section -->
+        <div class="text-center mb-10 max-w-2xl">
+            <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4" id="main-heading">Vienet - Công cụ làm nét ảnh online miễn phí</h1>
+            <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed" id="main-subtitle">
+                Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.
+            </p>
+        </div>
+
+        <!-- Tool Card (Liquid Glass) -->
+        <div class="w-full liquid-glass-light dark:liquid-glass-dark rounded-3xl p-6 sm:p-10 shadow-xl border border-zinc-200/80 dark:border-zinc-800/80 transition-all">
+            
+            <!-- Upload Area -->
+            <div id="drop-zone" class="border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-chocolate-light dark:hover:border-amber-400 rounded-2xl p-8 text-center cursor-pointer transition-all bg-white/40 dark:bg-zinc-900/40 relative group">
+                <input type="file" id="file-input" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" onchange="handleFileSelect(event)">
+                <div class="flex flex-col items-center justify-center space-y-3">
+                    <div class="w-16 h-16 rounded-2xl bg-chocolate-light/10 text-chocolate-light dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-base font-semibold mb-1" id="upload-title">Tải ảnh lên để làm nét</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400" id="upload-desc">Kéo thả ảnh vào đây hoặc bấm để chọn tệp (PNG, JPG, WEBP)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview & Processing Area (Hidden initially) -->
+            <div id="preview-container" class="hidden mt-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Original -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Ảnh gốc</span>
+                        <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-black/5 aspect-video flex items-center justify-center relative">
+                            <img id="original-preview" class="max-h-64 object-contain" alt="Original">
+                        </div>
+                    </div>
+                    <!-- Enhanced Result -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-chocolate-light dark:text-amber-400">Ảnh đã làm nét AI</span>
+                        <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-black/5 aspect-video flex items-center justify-center relative">
+                            <canvas id="result-canvas" class="max-h-64 object-contain"></canvas>
+                            <div id="processing-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center hidden">
+                                <div class="flex items-center space-x-2 text-white">
+                                    <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    <span class="text-sm font-medium">Đang xử lý AI...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls & Actions -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <label class="text-sm font-medium text-zinc-600 dark:text-zinc-400">Mức độ nét:</label>
+                        <input type="range" id="sharpen-range" min="1" max="3" step="0.5" value="1.5" class="accent-chocolate-light cursor-pointer" oninput="processImage()">
+                    </div>
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <button onclick="resetImage()" class="px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-semibold text-sm transition-colors w-full sm:w-auto">Chọn ảnh khác</button>
+                        <a id="download-btn" download="vienet-enhanced.png" class="px-6 py-3 bg-chocolate-light hover:bg-chocolate-hover text-white font-semibold rounded-xl shadow-lg transition-all text-center w-full sm:w-auto flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span id="download-text">Tải ảnh đã làm nét</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full py-6 px-6 sm:px-12 border-t border-zinc-200/60 dark:border-zinc-800/60 liquid-glass-light dark:liquid-glass-dark text-center text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+            <span id="footer-copy">&copy; Vienet - Công cụ làm nét ảnh online miễn phí</span>
+        </div>
+        <div class="font-medium text-zinc-600 dark:text-zinc-300">
+            Author: Giao Su AI, Gemini, ChatGPT
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Multi-language dictionary
+        const i18n = {
+            vi: {
+                title: "Vienet - Công cụ làm nét ảnh online miễn phí",
+                subtitle: "Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.",
+                question: "Hòn đảo Hoàng Sa và hòn đảo Trường Sa thuộc nước nào?",
+                placeholder: "Nhập đáp án...",
+                submit: "Xác nhận",
+                error: "Đáp án chưa chính xác. Vui lòng thử lại!",
+                uploadTitle: "Tải ảnh lên để làm nét",
+                uploadDesc: "Kéo thả ảnh vào đây hoặc bấm để chọn tệp (PNG, JPG, WEBP)",
+                downloadBtn: "Tải ảnh đã làm nét",
+                footer: "© Vienet - Công cụ làm nét ảnh online miễn phí",
+                popupBadge: "Xác thực quyền truy cập",
+                popupTitle: "// Câu hỏi dành cho bạn!"
+            },
+            en: {
+                title: "Vienet - Free Online AI Image Sharpening Tool",
+                subtitle: "Enhance your images for free online with Vienet - Fast, secure, and completely free.",
+                question: "Which country do the Hoang Sa and Truong Sa islands belong to?",
+                placeholder: "Enter answer...",
+                submit: "Submit",
+                error: "Incorrect answer. Please try again!",
+                uploadTitle: "Upload image to sharpen",
+                uploadDesc: "Drag & drop image here or click to browse (PNG, JPG, WEBP)",
+                downloadBtn: "Download Enhanced Image",
+                footer: "© Vienet - Free Online AI Image Sharpening Tool",
+                popupBadge: "Access Verification",
+                popupTitle: "// Question for you!"
+            },
+            zh: {
+                title: "Vienet - 免费在线AI图像锐化工具",
+                subtitle: "使用 Vienet 免费在线增强您的照片 - 快捷、安全、完全免费。",
+                question: "西沙群岛（Hoàng Sa）和南沙群岛（Trường Sa）属于哪个国家？",
+                placeholder: "输入答案...",
+                submit: "提交",
+                error: "答案不正确，请重试！",
+                uploadTitle: "上传图片进行处理",
+                uploadDesc: "将图片拖放到此处或点击浏览（PNG, JPG, WEBP）",
+                downloadBtn: "下载处理后的图片",
+                footer: "© Vienet - 免费在线AI图像锐化工具",
+                popupBadge: "访问验证",
+                popupTitle: "// 给您的提问！"
+            },
+            ko: {
+                title: "Vienet - 무료 온라인 AI 이미지 선명화 도구",
+                subtitle: "Vienet으로 무료 온라인 이미지 선명화 - 빠르고 안전하며 완전 무료.",
+                question: "호앙사(Hoang Sa)와 쯔엉사(Truong Sa) 섬은 어느 나라에 속합니까?",
+                placeholder: "정답을 입력하세요...",
+                submit: "제출",
+                error: "오답입니다. 다시 시도해주세요!",
+                uploadTitle: "선명하게 할 이미지 업로드",
+                uploadDesc: "여기에 이미지를 드래그하거나 클릭하여 찾아보세요 (PNG, JPG, WEBP)",
+                downloadBtn: "다운로드",
+                footer: "© Vienet - 무료 온라인 AI 이미지 선명화 도구",
+                popupBadge: "접근 권한 인증",
+                popupTitle: "// 질문입니다!"
+            },
+            es: {
+                title: "Vienet - Herramienta gratuita de mejora de imágenes con IA en línea",
+                subtitle: "Mejora tus imágenes gratis en línea con Vienet - Rápido, seguro y 100% gratuito.",
+                question: "¿A qué país pertenecen las islas Hoàng Sa y Trường Sa?",
+                placeholder: "Introduce tu respuesta...",
+                submit: "Enviar",
+                error: "Respuesta incorrecta. ¡Por favor, inténtalo de nuevo!",
+                uploadTitle: "Sube tu imagen para mejorar",
+                uploadDesc: "Arrastra y suelta tu imagen aquí o haz clic para explorar (PNG, JPG, WEBP)",
+                downloadBtn: "Descargar imagen mejorada",
+                footer: "© Vienet - Herramienta gratuita de mejora de imágenes con IA en línea",
+                popupBadge: "Verificación de acceso",
+                popupTitle: "// ¡Pregunta para ti!"
+            }
+        };
+
+        // Cookie Helpers
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        // Theme Management
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                setCookie('vienet_theme', 'light', 365);
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                setCookie('vienet_theme', 'dark', 365);
+            }
+        }
+
+        // Init theme from cookie
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = getCookie('vienet_theme');
+            if (savedTheme) {
+                document.documentElement.className = savedTheme;
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.className = 'dark';
+            }
+
+            // Init language from cookie or default vi
+            const savedLang = getCookie('vienet_lang') || 'vi';
+            document.getElementById('lang-switcher').value = savedLang;
+            changeLanguage(savedLang, false);
+
+            // Check Geo IP
+            checkGeoIP();
+        });
+
+        // Language Switcher
+        function changeLanguage(lang, save = true) {
+            if (save) setCookie('vienet_lang', lang, 365);
+            const t = i18n[lang] || i18n['vi'];
+            
+            document.getElementById('web-title').innerText = t.title;
+            document.getElementById('web-desc').content = t.subtitle;
+            document.getElementById('main-heading').innerText = t.title;
+            document.getElementById('main-subtitle').innerText = t.subtitle;
+            document.getElementById('upload-title').innerText = t.uploadTitle;
+            document.getElementById('upload-desc').innerText = t.uploadDesc;
+            document.getElementById('download-text').innerText = t.downloadBtn;
+            document.getElementById('footer-copy').innerText = t.footer;
+            
+            if(document.getElementById('popup-badge')) {
+                document.getElementById('popup-badge').innerText = t.popupBadge;
+                document.getElementById('popup-title').innerText = t.popupTitle;
+                document.getElementById('popup-question').innerText = t.question;
+                document.getElementById('geo-answer-input').placeholder = t.placeholder;
+                document.getElementById('geo-submit-btn').innerText = t.submit;
+            }
+        }
+
+        // Geo IP Check
+        async function checkGeoIP() {
+            if (getCookie('vienet_verified') === 'true') return;
+
+            try {
+                let countryCode = 'VN';
+                try {
+                    const res = await fetch('https://ipapi.co/json/');
+                    const data = await res.json();
+                    if (data.country_code) countryCode = data.country_code;
+                } catch(e) {
+                    const res2 = await fetch('https://ipwho.is/');
+                    const data2 = await res2.json();
+                    if (data2.country_code) countryCode = data2.country_code;
+                }
+
+                if (countryCode !== 'VN') {
+                    // Automatically switch language based on foreign IP region
+                    let targetLang = 'en';
+                    if (['CN', 'HK', 'MO', 'TW'].includes(countryCode)) targetLang = 'zh';
+                    else if (countryCode === 'KR') targetLang = 'ko';
+                    else if (['ES', 'MX', 'AR', 'CO', 'CL', 'PE'].includes(countryCode)) targetLang = 'es';
+
+                    document.getElementById('lang-switcher').value = targetLang;
+                    changeLanguage(targetLang);
+
+                    // Show popup
+                    document.getElementById('geo-popup').classList.remove('hidden');
+                }
+            } catch(err) {
+                // If network fails, allow access or keep silent
+            }
+        }
+
+        function verifyGeoAnswer() {
+            const inputVal = document.getElementById('geo-answer-input').value.trim().toLowerCase();
+            const validAnswers = ["vietnam", "việt nam", "viet nam", "việt-nam", "베트남", "越南", "vn"];
+            
+            let isCorrect = validAnswers.some(ans => inputVal.includes(ans));
+
+            if (isCorrect) {
+                setCookie('vienet_verified', 'true', 365);
+                document.getElementById('geo-popup').classList.add('hidden');
+            } else {
+                const lang = document.getElementById('lang-switcher').value;
+                const errText = i18n[lang]?.error || i18n['vi'].error;
+                const errorEl = document.getElementById('geo-error');
+                errorEl.innerText = errText;
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Image Processing Logic
+        let currentImage = null;
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImage = img;
+                    document.getElementById('original-preview').src = e.target.result;
+                    document.getElementById('drop-zone').classList.add('hidden');
+                    document.getElementById('preview-container').classList.remove('hidden');
+                    processImage();
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function processImage() {
+            if (!currentImage) return;
+
+            const canvas = document.getElementById('result-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = currentImage.width;
+            canvas.height = currentImage.height;
+
+            ctx.drawImage(currentImage, 0, 0);
+
+            const amount = parseFloat(document.getElementById('sharpen-range').value);
+
+            // Apply sharpening kernel via ImageData
+            let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let data = imgData.data;
+            let w = canvas.width;
+            let h = canvas.height;
+
+            let weights = [
+                 0, -amount,  0,
+                -amount, 1 + (4 * amount), -amount,
+                 0, -amount,  0
+            ];
+
+            let side = 3;
+            let halfSide = 1;
+            let src = new Uint8ClampedArray(data);
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    let r = 0, g = 0, b = 0;
+                    for (let cy = 0; cy < side; cy++) {
+                        let cz = y + cy - halfSide;
+                        if (cz >= 0 && cz < h) {
+                            for (let cx = 0; cx < side; cx++) {
+                                let cxx = x + cx - halfSide;
+                                if (cxx >= 0 && cxx < w) {
+                                    let srcOff = (cz * w + cxx) * 4;
+                                    let wt = weights[cy * side + cx];
+                                    r += src[srcOff] * wt;
+                                    g += src[srcOff + 1] * wt;
+                                    b += src[srcOff + 2] * wt;
+                                }
+                            }
+                        }
+                    }
+                    let dstOff = (y * w + x) * 4;
+                    data[dstOff] = Math.min(255, Math.max(0, r));
+                    data[dstOff + 1] = Math.min(255, Math.max(0, g));
+                    data[dstOff + 2] = Math.min(255, Math.max(0, b));
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+
+            // Update download link
+            document.getElementById('download-btn').href = canvas.toDataURL('image/png');
+        }
+
+        function resetImage() {
+            currentImage = null;
+            document.getElementById('file-input').value = '';
+            document.getElementById('preview-container').classList.add('hidden');
+            document.getElementById('drop-zone').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
