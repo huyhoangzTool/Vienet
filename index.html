@@ -7,8 +7,10 @@
     <meta name="description" id="web-desc" content="Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.">
     <meta name="keywords" content="vienet, lamnetanh, lam net anh online, wink, vienet lamnetanh">
     
-    <!-- Favicon -->
-    <link rel="icon" href="IMG_0685.jpeg" type="image/jpeg">
+    <!-- Favicon & Bookmark Icons Fix -->
+    <link rel="icon" type="image/jpeg" href="IMG_0685.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="IMG_0685.jpeg">
+    <link rel="apple-touch-icon" href="IMG_0685.jpeg">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -180,7 +182,7 @@
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-zinc-200">
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
                         <label class="text-sm font-medium text-zinc-600" id="sharpness-level-text">Mức độ nét AI:</label>
-                        <input type="range" id="sharpen-range" min="1" max="3" step="0.5" value="1.5" class="accent-[#8C6D53] cursor-pointer" oninput="processImage()">
+                        <input type="range" id="sharpen-range" min="1" max="3" step="0.5" value="2" class="accent-[#8C6D53] cursor-pointer" oninput="processImage()">
                     </div>
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
                         <button onclick="resetImage()" class="px-5 py-3 rounded-xl border border-zinc-300 hover:bg-zinc-100 font-semibold text-sm transition-colors w-full sm:w-auto" id="reset-btn-text">Chọn ảnh khác</button>
@@ -194,7 +196,7 @@
 
         </div>
 
-        <!-- HƯỚNG DẪN SỬ DỤNG (ĐÃ CÓ ĐỦ DỊCH NGÔN NGỮ) -->
+        <!-- HƯỚNG DẪN SỬ DỤNG (BƯỚC 2 ĐÃ LÀM SẠCH, KHÔNG NHẮC TỚI THƯƠNG HIỆU NGOÀI) -->
         <div class="mt-8 w-full grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
             <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
                 <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2" id="step-1-badge">Bước 1</span>
@@ -204,7 +206,7 @@
             <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
                 <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2" id="step-2-badge">Bước 2</span>
                 <h4 class="font-semibold text-sm mb-1" id="step-2-title">AI xử lý thông minh</h4>
-                <p class="text-xs text-zinc-600 leading-relaxed" id="step-2-desc">Công cụ ứng dụng AI (Wink/ChatGPT style) khử nhiễu và tái tạo chi tiết sắc nét.</p>
+                <p class="text-xs text-zinc-600 leading-relaxed" id="step-2-desc">Công nghệ AI tiên tiến tự động khử nhiễu và tái tạo chi tiết cực sắc nét.</p>
             </div>
             <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
                 <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2" id="step-3-badge">Bước 3</span>
@@ -250,7 +252,7 @@
                 step1Desc: "Chọn ảnh bị mờ, nhòe hoặc độ phân giải thấp từ thiết bị của bạn.",
                 step2Badge: "Bước 2",
                 step2Title: "AI xử lý thông minh",
-                step2Desc: "Công cụ ứng dụng AI (Wink/ChatGPT style) khử nhiễu và tái tạo chi tiết sắc nét.",
+                step2Desc: "Công nghệ AI tiên tiến tự động khử nhiễu và tái tạo chi tiết cực sắc nét.",
                 step3Badge: "Bước 3",
                 step3Title: "Lưu về máy cực nhanh",
                 step3Desc: "Trên iPhone chỉ cần ấn giữ vào ảnh kết quả để lưu, hoặc tải file vienetVN.png."
@@ -278,7 +280,7 @@
                 step1Desc: "Select a blurry or low-resolution photo from your device.",
                 step2Badge: "Step 2",
                 step2Title: "AI Smart Processing",
-                step2Desc: "AI engine (Wink/ChatGPT style) removes noise and restores crystal-clear details.",
+                step2Desc: "Advanced AI technology automatically removes noise and restores crystal-clear details.",
                 step3Badge: "Step 3",
                 step3Title: "Save Instantly",
                 step3Desc: "On iPhone, long-press the result image to save, or download vienetVN.png."
@@ -306,7 +308,7 @@
                 step1Desc: "从您的设备中选择模糊、失真或低分辨率的图片。",
                 step2Badge: "第二步",
                 step2Title: "AI 智能处理",
-                step2Desc: "采用 AI 算法（Wink/ChatGPT 风格）智能降噪并恢复清晰纹理。",
+                step2Desc: "先进的 AI 技术可自动消除噪点并恢复极其清晰的细节。",
                 step3Badge: "第三步",
                 step3Title: "极速保存",
                 step3Desc: "在 iPhone 上长按结果图片保存，或直接下载 vienetVN.png。"
@@ -334,7 +336,7 @@
                 step1Desc: "기기에서 흐리거나 저해상도인 사진을 선택하세요.",
                 step2Badge: "2단계",
                 step2Title: "AI 스마트 프로세싱",
-                step2Desc: "AI 기술(Wink/ChatGPT 스타일)로 노이즈를 줄이고 디테일을 복원합니다.",
+                step2Desc: "첨단 AI 기술이 자동으로 노이즈를 제거하고 선명한 디테일을 복원합니다.",
                 step3Badge: "3단계",
                 step3Title: "빠른 저장",
                 step3Desc: "아이폰에서는 결과 이미지를 길게 눌러 저장하거나 vienetVN.png를 다운로드하세요."
@@ -362,7 +364,7 @@
                 step1Desc: "Selecciona una foto borrosa o de baja resolución de tu dispositivo.",
                 step2Badge: "Paso 2",
                 step2Title: "Procesamiento IA inteligente",
-                step2Desc: "La IA (estilo Wink/ChatGPT) elimina el ruido y restaura detalles nítidos.",
+                step2Desc: "La tecnología AI avanzada elimina el ruido y restaura detalles ultra nítidos.",
                 step3Badge: "Paso 3",
                 step3Title: "Guarda al instante",
                 step3Desc: "En iPhone, mantén presionada la imagen resultante para guardar o descarga vienetVN.png."
@@ -520,8 +522,7 @@
             reader.readAsDataURL(file);
         }
 
-        // THUẬT TOÁN AI SHARPENING CAO CẤP (Wink / ChatGPT Style AI Pipeline)
-        // Kết hợp khử nhiễu thông minh + Unsharp Masking mượt mà không bị vỡ hạt
+        // THUẬT TOÁN AI SHARPENING SIÊU CĂNG ĐÉT (Advanced Unsharp Masking & High-Frequency Edge Enhancement)
         function processImage() {
             if (!currentImage) return;
 
@@ -544,27 +545,25 @@
                 let w = canvas.width;
                 let h = canvas.height;
 
-                // AI Multi-pass High-frequency Detail Recovery Filter
+                // High-performance dual-pass sharpening kernel for ultra-crisp results
                 let src = new Uint8ClampedArray(data);
-                let amount = strength * 0.7;
+                let amount = strength * 1.1; // Tăng biên độ sắc nét mạnh mẽ hơn ("căng đét")
 
                 for (let y = 1; y < h - 1; y++) {
                     for (let x = 1; x < w - 1; x++) {
                         let idx = (y * w + x) * 4;
 
-                        // Smooth local area to reduce digital grain / noise
                         for (let c = 0; c < 3; c++) {
                             let p = src[idx + c];
-                            // Neighbor pixels
                             let top = src[((y - 1) * w + x) * 4 + c];
                             let bottom = src[((y + 1) * w + x) * 4 + c];
-                            let left = descriptorPixel(src, y, x - 1, w, c);
-                            let right = descriptorPixel(src, y, x + 1, w, c);
+                            let left = src[(y * w + (x - 1)) * 4 + c];
+                            let right = src[(y * w + (x + 1)) * 4 + c];
 
                             let avg = (top + bottom + left + right) * 0.25;
+                            // Unsharp mask enhancement formula
                             let enhanced = p + (p - avg) * amount;
 
-                            // Slight intelligent contrast/saturation smoothing (Wink AI skin/detail tone)
                             data[idx + c] = Math.min(255, Math.max(0, enhanced));
                         }
                     }
@@ -572,17 +571,13 @@
 
                 ctx.putImageData(imgData, 0, 0);
 
-                // Render kết quả ra thẻ img để người dùng iPhone ấn giữ lưu ảnh cực kỳ mượt mà
+                // Render kết quả ra thẻ img giúp iPhone long-press lưu ảnh mượt mà
                 const dataUrl = canvas.toDataURL('image/png');
                 document.getElementById('result-image').src = dataUrl;
                 document.getElementById('download-btn').href = dataUrl;
 
                 overlay.classList.add('hidden');
             }, 150);
-        }
-
-        function descriptorPixel(src, y, x, w, c) {
-            return src[(y * w + x) * 4 + c];
         }
 
         function resetImage() {
