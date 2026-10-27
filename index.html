@@ -182,7 +182,8 @@
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-zinc-200">
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
                         <label class="text-sm font-medium text-zinc-600" id="sharpness-level-text">Mức độ nét AI:</label>
-                        <input type="range" id="sharpen-range" min="1" max="3" step="0.5" value="2" class="accent-[#8C6D53] cursor-pointer" oninput="processImage()">
+                        <!-- Đã mở rộng range từ 1 đến 5 để có thể chỉnh độ nét cực mạnh -->
+                        <input type="range" id="sharpen-range" min="1" max="5" step="1" value="3" class="accent-[#8C6D53] cursor-pointer" oninput="processImage()">
                     </div>
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
                         <button onclick="resetImage()" class="px-5 py-3 rounded-xl border border-zinc-300 hover:bg-zinc-100 font-semibold text-sm transition-colors w-full sm:w-auto" id="reset-btn-text">Chọn ảnh khác</button>
@@ -196,7 +197,7 @@
 
         </div>
 
-        <!-- HƯỚNG DẪN SỬ DỤNG (BƯỚC 2 ĐÃ LÀM SẠCH, KHÔNG NHẮC TỚI THƯƠNG HIỆU NGOÀI) -->
+        <!-- HƯỚNG DẪN SỬ DỤNG -->
         <div class="mt-8 w-full grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
             <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
                 <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2" id="step-1-badge">Bước 1</span>
@@ -522,7 +523,7 @@
             reader.readAsDataURL(file);
         }
 
-        // THUẬT TOÁN AI SHARPENING SIÊU CĂNG ĐÉT (Advanced Unsharp Masking & High-Frequency Edge Enhancement)
+        // THUẬT TOÁN AI SHARPENING SIÊU CỰC KỲ MẠNH MẼ ("CĂNG ĐÉT" TỐI ĐA)
         function processImage() {
             if (!currentImage) return;
 
@@ -545,9 +546,9 @@
                 let w = canvas.width;
                 let h = canvas.height;
 
-                // High-performance dual-pass sharpening kernel for ultra-crisp results
                 let src = new Uint8ClampedArray(data);
-                let amount = strength * 1.1; // Tăng biên độ sắc nét mạnh mẽ hơn ("căng đét")
+                // Hệ số nhân cực mạnh (strength nhân tới 2.5) để tái tạo biên độ nét cực cao
+                let amount = strength * 2.5;
 
                 for (let y = 1; y < h - 1; y++) {
                     for (let x = 1; x < w - 1; x++) {
@@ -561,7 +562,7 @@
                             let right = src[(y * w + (x + 1)) * 4 + c];
 
                             let avg = (top + bottom + left + right) * 0.25;
-                            // Unsharp mask enhancement formula
+                            // Khuếch đại biên độ chi tiết cực mạnh giúp ảnh nét căng đét
                             let enhanced = p + (p - avg) * amount;
 
                             data[idx + c] = Math.min(255, Math.max(0, enhanced));
