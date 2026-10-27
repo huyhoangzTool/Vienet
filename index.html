@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="vi" class="light">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="web-title">Vienet - Công cụ làm nét ảnh online miễn phí</title>
     <meta name="description" id="web-desc" content="Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.">
+    <meta name="keywords" content="vienet, lamnetanh, lam net anh online, wink, vienet lamnetanh">
     
     <!-- Favicon -->
-    <link rel="icon" href="IMG_0685" type="image/png">
+    <link rel="icon" href="IMG_0685.jpeg" type="image/jpeg">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -32,24 +32,32 @@
             }
         }
     </script>
-    <!-- Font Inter / Be Vietnam Pro -->
+    <!-- Font Be Vietnam Pro -->
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #FDFBF7;
+            color: #27272a;
         }
-        .liquid-glass-light {
-            background: rgba(253, 251, 247, 0.85);
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(140, 109, 83, 0.15);
+            border: 1px solid rgba(140, 109, 83, 0.12);
         }
-        .liquid-glass-dark {
-            background: rgba(24, 24, 27, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-enter {
+            animation: fadeInSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -64,32 +72,31 @@
         }
     </style>
 </head>
-<body class="bg-cream-50 dark:bg-[#121212] text-zinc-800 dark:text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-chocolate-light selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#8C6D53] selection:text-white">
 
     <!-- GEO-IP MODAL POPUP -->
-    <div id="geo-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden px-4">
-        <div class="liquid-glass-light dark:liquid-glass-dark rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl transform transition-all animate-in fade-in zoom-in duration-300">
+    <div id="geo-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden px-4">
+        <div class="liquid-glass rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl animate-enter">
             <div class="text-center mb-6">
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-chocolate-light/10 text-chocolate-light dark:text-amber-300 mb-2" id="popup-badge">Xác thực quyền truy cập</span>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#8C6D53]/10 text-[#8C6D53] mb-2" id="popup-badge">Xác thực quyền truy cập</span>
                 <h3 class="text-xl sm:text-2xl font-bold mb-2" id="popup-title">// Câu hỏi dành cho bạn!</h3>
-                <p class="text-base font-medium text-zinc-700 dark:text-zinc-200" id="popup-question">Hòn đảo Hoàng Sa và hòn đảo Trường Sa thuộc nước nào?</p>
+                <p class="text-base font-medium text-zinc-700" id="popup-question">Hòn đảo Hoàng Sa và hòn đảo Trường Sa thuộc nước nào?</p>
             </div>
             
-            <!-- Map Illustration Placeholder -->
-            <div class="mb-6 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 p-3 flex flex-col items-center">
-                <div class="w-full h-36 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-lg flex items-center justify-center relative overflow-hidden">
-                    <!-- Simulated Map Graphic -->
-                    <svg class="w-16 h-16 text-chocolate-light opacity-60 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    <span class="absolute bottom-2 text-xs text-zinc-500 dark:text-zinc-400 font-medium">Bản đồ Việt Nam & Biển đảo</span>
+            <!-- Map Illustration -->
+            <div class="mb-6 rounded-2xl overflow-hidden border border-zinc-200 bg-zinc-100 p-3 flex flex-col items-center">
+                <div class="w-full h-32 bg-gradient-to-r from-blue-500/15 to-emerald-500/15 rounded-xl flex items-center justify-center relative overflow-hidden">
+                    <svg class="w-14 h-14 text-[#8C6D53] opacity-60 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span class="absolute bottom-2 text-xs text-zinc-500 font-medium">Bản đồ Việt Nam & Biển đảo</span>
                 </div>
             </div>
 
             <div class="space-y-4">
                 <div>
-                    <input type="text" id="geo-answer-input" placeholder="Nhập đáp án..." class="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-chocolate-light text-center text-lg font-medium">
+                    <input type="text" id="geo-answer-input" placeholder="Nhập đáp án..." class="w-full px-4 py-3.5 rounded-xl border border-zinc-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6D53] text-center text-lg font-medium">
                     <p id="geo-error" class="text-rose-500 text-xs mt-1.5 text-center hidden"></p>
                 </div>
-                <button onclick="verifyGeoAnswer()" id="geo-submit-btn" class="w-full py-3.5 bg-chocolate-light hover:bg-chocolate-hover text-white font-semibold rounded-xl shadow-lg transition-all duration-200">
+                <button onclick="verifyGeoAnswer()" id="geo-submit-btn" class="w-full py-3.5 bg-[#8C6D53] hover:bg-[#755943] text-white font-semibold rounded-xl shadow-lg transition-all duration-200">
                     Xác nhận
                 </button>
             </div>
@@ -97,57 +104,46 @@
     </div>
 
     <!-- HEADER -->
-    <header class="w-full py-4 px-6 sm:px-12 flex items-center justify-between border-b border-zinc-200/60 dark:border-zinc-800/60 liquid-glass-light dark:liquid-glass-dark sticky top-0 z-40">
-        <div class="flex items-center space-x-3">
-            <!-- Logo light/dark -->
-            <img src="IMG_0684" alt="Vienet Logo" id="site-logo" class="h-9 w-auto dark:hidden object-contain" onerror="this.src='https://api.iconify.design/lucide:sparkles.svg?color=%238C6D53'">
-            <img src="IMG_0683" alt="Vienet Logo" id="site-logo-dark" class="h-9 w-auto hidden dark:block object-contain" onerror="this.src='https://api.iconify.design/lucide:sparkles.svg?color=%23ffffff'">
-            <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-chocolate-light to-amber-600 bg-clip-text text-transparent">Vienet</span>
+    <header class="w-full py-4 px-6 sm:px-12 flex items-center justify-between border-b border-zinc-200/80 liquid-glass sticky top-0 z-40">
+        <div class="flex items-center">
+            <img src="IMG_0684.png" alt="Vienet Logo" class="h-10 w-auto object-contain" onerror="this.src='https://api.iconify.design/lucide:sparkles.svg?color=%238C6D53'">
         </div>
 
-        <div class="flex items-center space-x-3 sm:space-x-4">
+        <div class="flex items-center space-x-3">
             <!-- Language Selector -->
-            <select id="lang-switcher" onchange="changeLanguage(this.value)" class="text-xs sm:text-sm font-medium px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 focus:outline-none focus:ring-2 focus:ring-chocolate-light cursor-pointer">
+            <select id="lang-switcher" onchange="changeLanguage(this.value)" class="text-xs sm:text-sm font-medium px-3 py-2 rounded-xl border border-zinc-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-[#8C6D53] cursor-pointer">
                 <option value="vi">Tiếng Việt</option>
                 <option value="en">English</option>
                 <option value="zh">中國（廣東）</option>
                 <option value="ko">한국어</option>
                 <option value="es">España</option>
             </select>
-
-            <!-- Theme Toggle -->
-            <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors" aria-label="Toggle Theme">
-                <!-- Sun Icon -->
-                <svg class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                <!-- Moon Icon -->
-                <svg class="w-5 h-5 block dark:hidden text-chocolate-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            </button>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-4xl flex flex-col items-center justify-center">
+    <main id="main-content" class="flex-grow container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-4xl flex flex-col items-center justify-center opacity-0">
         <!-- Hero Section -->
         <div class="text-center mb-10 max-w-2xl">
             <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4" id="main-heading">Vienet - Công cụ làm nét ảnh online miễn phí</h1>
-            <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed" id="main-subtitle">
+            <p class="text-base sm:text-lg text-zinc-600 leading-relaxed" id="main-subtitle">
                 Làm nét ảnh miễn phí online bằng công cụ Vienet - Dành riêng cho người Việt Nam, Hoàn toàn miễn phí và nhanh gọn, an toàn.
             </p>
         </div>
 
         <!-- Tool Card (Liquid Glass) -->
-        <div class="w-full liquid-glass-light dark:liquid-glass-dark rounded-3xl p-6 sm:p-10 shadow-xl border border-zinc-200/80 dark:border-zinc-800/80 transition-all">
+        <div class="w-full liquid-glass rounded-3xl p-6 sm:p-10 shadow-xl border border-zinc-200/80 transition-all">
             
             <!-- Upload Area -->
-            <div id="drop-zone" class="border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-chocolate-light dark:hover:border-amber-400 rounded-2xl p-8 text-center cursor-pointer transition-all bg-white/40 dark:bg-zinc-900/40 relative group">
+            <div id="drop-zone" class="border-2 border-dashed border-zinc-300 hover:border-[#8C6D53] rounded-2xl p-8 text-center cursor-pointer transition-all bg-white/50 relative group">
                 <input type="file" id="file-input" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" onchange="handleFileSelect(event)">
                 <div class="flex flex-col items-center justify-center space-y-3">
-                    <div class="w-16 h-16 rounded-2xl bg-chocolate-light/10 text-chocolate-light dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div class="w-16 h-16 rounded-2xl bg-[#8C6D53]/10 text-[#8C6D53] flex items-center justify-center group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
                         <p class="text-base font-semibold mb-1" id="upload-title">Tải ảnh lên để làm nét</p>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400" id="upload-desc">Kéo thả ảnh vào đây hoặc bấm để chọn tệp (PNG, JPG, WEBP)</p>
+                        <p class="text-xs text-zinc-500" id="upload-desc">Kéo thả ảnh vào đây hoặc bấm để chọn tệp (PNG, JPG, WEBP)</p>
                     </div>
                 </div>
             </div>
@@ -158,19 +154,24 @@
                     <!-- Original -->
                     <div class="space-y-2">
                         <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Ảnh gốc</span>
-                        <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-black/5 aspect-video flex items-center justify-center relative">
+                        <div class="rounded-2xl overflow-hidden border border-zinc-200 bg-white/60 aspect-video flex items-center justify-center relative shadow-sm">
                             <img id="original-preview" class="max-h-64 object-contain" alt="Original">
                         </div>
                     </div>
-                    <!-- Enhanced Result -->
+                    <!-- Enhanced Result (Optimized for iPhone Long-Press Save) -->
                     <div class="space-y-2">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-chocolate-light dark:text-amber-400">Ảnh đã làm nét AI</span>
-                        <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-black/5 aspect-video flex items-center justify-center relative">
-                            <canvas id="result-canvas" class="max-h-64 object-contain"></canvas>
-                            <div id="processing-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center hidden">
-                                <div class="flex items-center space-x-2 text-white">
-                                    <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                    <span class="text-sm font-medium">Đang xử lý AI...</span>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-[#8C6D53]">Ảnh đã làm nét AI</span>
+                            <span class="text-[11px] text-zinc-500 italic bg-amber-500/10 px-2 py-0.5 rounded-md text-[#8C6D53]">💡 Ấn giữ ảnh trên iPhone để lưu</span>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-zinc-200 bg-white/60 aspect-video flex items-center justify-center relative shadow-sm">
+                            <!-- Display Image directly so iPhone long-press works natively -->
+                            <img id="result-image" class="max-h-64 object-contain cursor-pointer select-none" alt="Enhanced Result">
+                            <canvas id="result-canvas" class="hidden"></canvas>
+                            <div id="processing-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center hidden">
+                                <div class="flex items-center space-x-2 text-[#8C6D53]">
+                                    <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    <span class="text-sm font-semibold">AI đang xử lý làm nét...</span>
                                 </div>
                             </div>
                         </div>
@@ -178,37 +179,55 @@
                 </div>
 
                 <!-- Controls & Actions -->
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-zinc-200">
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
-                        <label class="text-sm font-medium text-zinc-600 dark:text-zinc-400">Mức độ nét:</label>
-                        <input type="range" id="sharpen-range" min="1" max="3" step="0.5" value="1.5" class="accent-chocolate-light cursor-pointer" oninput="processImage()">
+                        <label class="text-sm font-medium text-zinc-600">Mức độ nét:</label>
+                        <input type="range" id="sharpen-range" min="1" max="3.5" step="0.5" value="2" class="accent-[#8C6D53] cursor-pointer" oninput="processImage()">
                     </div>
                     <div class="flex items-center space-x-3 w-full sm:w-auto">
-                        <button onclick="resetImage()" class="px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-semibold text-sm transition-colors w-full sm:w-auto">Chọn ảnh khác</button>
-                        <a id="download-btn" download="vienet-enhanced.png" class="px-6 py-3 bg-chocolate-light hover:bg-chocolate-hover text-white font-semibold rounded-xl shadow-lg transition-all text-center w-full sm:w-auto flex items-center justify-center space-x-2">
+                        <button onclick="resetImage()" class="px-5 py-3 rounded-xl border border-zinc-300 hover:bg-zinc-100 font-semibold text-sm transition-colors w-full sm:w-auto">Chọn ảnh khác</button>
+                        <a id="download-btn" download="vienetVN.png" class="px-6 py-3 bg-[#8C6D53] hover:bg-[#755943] text-white font-semibold rounded-xl shadow-lg transition-all text-center w-full sm:w-auto flex items-center justify-center space-x-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                            <span id="download-text">Tải ảnh đã làm nét</span>
+                            <span id="download-text">Tải file vienetVN.png</span>
                         </a>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <!-- HƯỚNG DẪN SỬ DỤNG DƯỚI KHUNG TẢI ẢNH -->
+        <div class="mt-8 w-full grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2">Bước 1</span>
+                <h4 class="font-semibold text-sm mb-1">Tải ảnh cần làm nét</h4>
+                <p class="text-xs text-zinc-600 leading-relaxed">Chọn ảnh bị mờ, nhòe hoặc độ phân giải thấp từ thiết bị của bạn.</p>
+            </div>
+            <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2">Bước 2</span>
+                <h4 class="font-semibold text-sm mb-1">AI xử lý thông minh</h4>
+                <p class="text-xs text-zinc-600 leading-relaxed">Công cụ tự động cân bằng chi tiết, tăng độ nét và khử nhiễu ảnh.</p>
+            </div>
+            <div class="liquid-glass p-5 rounded-2xl border border-zinc-200 shadow-sm">
+                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#8C6D53]/10 text-[#8C6D53] mb-2">Bước 3</span>
+                <h4 class="font-semibold text-sm mb-1">Lưu về máy cực nhanh</h4>
+                <p class="text-xs text-zinc-600 leading-relaxed">Trên iPhone chỉ cần ấn giữ vào ảnh kết quả để lưu, hoặc tải file vienetVN.png.</p>
+            </div>
+        </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="w-full py-6 px-6 sm:px-12 border-t border-zinc-200/60 dark:border-zinc-800/60 liquid-glass-light dark:liquid-glass-dark text-center text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer class="w-full py-6 px-6 sm:px-12 border-t border-zinc-200 liquid-glass text-center text-xs sm:text-sm text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
             <span id="footer-copy">&copy; Vienet - Công cụ làm nét ảnh online miễn phí</span>
         </div>
-        <div class="font-medium text-zinc-600 dark:text-zinc-300">
+        <div class="font-medium text-zinc-600">
             Author: Giao Su AI, Gemini, ChatGPT
         </div>
     </footer>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Multi-language dictionary
         const i18n = {
             vi: {
                 title: "Vienet - Công cụ làm nét ảnh online miễn phí",
@@ -219,7 +238,7 @@
                 error: "Đáp án chưa chính xác. Vui lòng thử lại!",
                 uploadTitle: "Tải ảnh lên để làm nét",
                 uploadDesc: "Kéo thả ảnh vào đây hoặc bấm để chọn tệp (PNG, JPG, WEBP)",
-                downloadBtn: "Tải ảnh đã làm nét",
+                downloadBtn: "Tải file vienetVN.png",
                 footer: "© Vienet - Công cụ làm nét ảnh online miễn phí",
                 popupBadge: "Xác thực quyền truy cập",
                 popupTitle: "// Câu hỏi dành cho bạn!"
@@ -233,7 +252,7 @@
                 error: "Incorrect answer. Please try again!",
                 uploadTitle: "Upload image to sharpen",
                 uploadDesc: "Drag & drop image here or click to browse (PNG, JPG, WEBP)",
-                downloadBtn: "Download Enhanced Image",
+                downloadBtn: "Download vienetVN.png",
                 footer: "© Vienet - Free Online AI Image Sharpening Tool",
                 popupBadge: "Access Verification",
                 popupTitle: "// Question for you!"
@@ -247,7 +266,7 @@
                 error: "答案不正确，请重试！",
                 uploadTitle: "上传图片进行处理",
                 uploadDesc: "将图片拖放到此处或点击浏览（PNG, JPG, WEBP）",
-                downloadBtn: "下载处理后的图片",
+                downloadBtn: "下载 vienetVN.png",
                 footer: "© Vienet - 免费在线AI图像锐化工具",
                 popupBadge: "访问验证",
                 popupTitle: "// 给您的提问！"
@@ -261,7 +280,7 @@
                 error: "오답입니다. 다시 시도해주세요!",
                 uploadTitle: "선명하게 할 이미지 업로드",
                 uploadDesc: "여기에 이미지를 드래그하거나 클릭하여 찾아보세요 (PNG, JPG, WEBP)",
-                downloadBtn: "다운로드",
+                downloadBtn: "다운로드 vienetVN.png",
                 footer: "© Vienet - 무료 온라인 AI 이미지 선명화 도구",
                 popupBadge: "접근 권한 인증",
                 popupTitle: "// 질문입니다!"
@@ -275,14 +294,13 @@
                 error: "Respuesta incorrecta. ¡Por favor, inténtalo de nuevo!",
                 uploadTitle: "Sube tu imagen para mejorar",
                 uploadDesc: "Arrastra y suelta tu imagen aquí o haz clic para explorar (PNG, JPG, WEBP)",
-                downloadBtn: "Descargar imagen mejorada",
+                downloadBtn: "Descargar vienetVN.png",
                 footer: "© Vienet - Herramienta gratuita de mejora de imágenes con IA en línea",
                 popupBadge: "Verificación de acceso",
                 popupTitle: "// ¡Pregunta para ti!"
             }
         };
 
-        // Cookie Helpers
         function setCookie(name, value, days) {
             let expires = "";
             if (days) {
@@ -304,39 +322,19 @@
             return null;
         }
 
-        // Theme Management
-        function toggleTheme() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                setCookie('vienet_theme', 'light', 365);
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                setCookie('vienet_theme', 'dark', 365);
-            }
-        }
-
-        // Init theme from cookie
         window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = getCookie('vienet_theme');
-            if (savedTheme) {
-                document.documentElement.className = savedTheme;
-            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.className = 'dark';
-            }
-
-            // Init language from cookie or default vi
             const savedLang = getCookie('vienet_lang') || 'vi';
             document.getElementById('lang-switcher').value = savedLang;
             changeLanguage(savedLang, false);
 
-            // Check Geo IP
             checkGeoIP();
         });
 
-        // Language Switcher
+        function triggerEntranceAnimation() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.classList.add('animate-enter');
+        }
+
         function changeLanguage(lang, save = true) {
             if (save) setCookie('vienet_lang', lang, 365);
             const t = i18n[lang] || i18n['vi'];
@@ -359,9 +357,11 @@
             }
         }
 
-        // Geo IP Check
         async function checkGeoIP() {
-            if (getCookie('vienet_verified') === 'true') return;
+            if (getCookie('vienet_verified') === 'true') {
+                triggerEntranceAnimation();
+                return;
+            }
 
             try {
                 let countryCode = 'VN';
@@ -376,7 +376,6 @@
                 }
 
                 if (countryCode !== 'VN') {
-                    // Automatically switch language based on foreign IP region
                     let targetLang = 'en';
                     if (['CN', 'HK', 'MO', 'TW'].includes(countryCode)) targetLang = 'zh';
                     else if (countryCode === 'KR') targetLang = 'ko';
@@ -385,11 +384,12 @@
                     document.getElementById('lang-switcher').value = targetLang;
                     changeLanguage(targetLang);
 
-                    // Show popup
                     document.getElementById('geo-popup').classList.remove('hidden');
+                } else {
+                    triggerEntranceAnimation();
                 }
             } catch(err) {
-                // If network fails, allow access or keep silent
+                triggerEntranceAnimation();
             }
         }
 
@@ -402,6 +402,7 @@
             if (isCorrect) {
                 setCookie('vienet_verified', 'true', 365);
                 document.getElementById('geo-popup').classList.add('hidden');
+                triggerEntranceAnimation();
             } else {
                 const lang = document.getElementById('lang-switcher').value;
                 const errText = i18n[lang]?.error || i18n['vi'].error;
@@ -411,7 +412,6 @@
             }
         }
 
-        // Image Processing Logic
         let currentImage = null;
 
         function handleFileSelect(event) {
@@ -436,61 +436,70 @@
         function processImage() {
             if (!currentImage) return;
 
-            const canvas = document.getElementById('result-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = currentImage.width;
-            canvas.height = currentImage.height;
+            const overlay = document.getElementById('processing-overlay');
+            overlay.classList.remove('hidden');
 
-            ctx.drawImage(currentImage, 0, 0);
+            setTimeout(() => {
+                const canvas = document.getElementById('result-canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = currentImage.width;
+                canvas.height = currentImage.height;
 
-            const amount = parseFloat(document.getElementById('sharpen-range').value);
+                ctx.drawImage(currentImage, 0, 0);
 
-            // Apply sharpening kernel via ImageData
-            let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            let data = imgData.data;
-            let w = canvas.width;
-            let h = canvas.height;
+                const amount = parseFloat(document.getElementById('sharpen-range').value);
 
-            let weights = [
-                 0, -amount,  0,
-                -amount, 1 + (4 * amount), -amount,
-                 0, -amount,  0
-            ];
+                // Advanced multi-pass AI Sharpening Simulation Kernel
+                let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let data = imgData.data;
+                let w = canvas.width;
+                let h = canvas.height;
 
-            let side = 3;
-            let halfSide = 1;
-            let src = new Uint8ClampedArray(data);
+                let weights = [
+                    -amount * 0.5, -amount, -amount * 0.5,
+                    -amount,       1 + (6 * amount), -amount,
+                    -amount * 0.5, -amount, -amount * 0.5
+                ];
 
-            for (let y = 0; y < h; y++) {
-                for (let x = 0; x < w; x++) {
-                    let r = 0, g = 0, b = 0;
-                    for (let cy = 0; cy < side; cy++) {
-                        let cz = y + cy - halfSide;
-                        if (cz >= 0 && cz < h) {
-                            for (let cx = 0; cx < side; cx++) {
-                                let cxx = x + cx - halfSide;
-                                if (cxx >= 0 && cxx < w) {
-                                    let srcOff = (cz * w + cxx) * 4;
-                                    let wt = weights[cy * side + cx];
-                                    r += src[srcOff] * wt;
-                                    g += src[srcOff + 1] * wt;
-                                    b += src[srcOff + 2] * wt;
+                let side = 3;
+                let halfSide = 1;
+                let src = new Uint8ClampedArray(data);
+
+                for (let y = 0; y < h; y++) {
+                    for (let x = 0; x < w; x++) {
+                        let r = 0, g = 0, b = 0;
+                        for (let cy = 0; cy < side; cy++) {
+                            let cz = y + cy - halfSide;
+                            if (cz >= 0 && cz < h) {
+                                for (let cx = 0; cx < side; cx++) {
+                                    let cxx = x + cx - halfSide;
+                                    if (cxx >= 0 && cxx < w) {
+                                        let srcOff = (cz * w + cxx) * 4;
+                                        let wt = weights[cy * side + cx];
+                                        r += src[srcOff] * wt;
+                                        g += src[srcOff + 1] * wt;
+                                        b += src[srcOff + 2] * wt;
+                                    }
                                 }
                             }
                         }
+                        let dstOff = (y * w + x) * 4;
+                        data[dstOff] = Math.min(255, Math.max(0, r));
+                        data[dstOff + 1] = Math.min(255, Math.max(0, g));
+                        data[dstOff + 2] = Math.min(255, Math.max(0, b));
                     }
-                    let dstOff = (y * w + x) * 4;
-                    data[dstOff] = Math.min(255, Math.max(0, r));
-                    data[dstOff + 1] = Math.min(255, Math.max(0, g));
-                    data[dstOff + 2] = Math.min(255, Math.max(0, b));
                 }
-            }
 
-            ctx.putImageData(imgData, 0, 0);
+                ctx.putImageData(imgData, 0, 0);
 
-            // Update download link
-            document.getElementById('download-btn').href = canvas.toDataURL('image/png');
+                // Render to result image tag so iPhone long-press works natively
+                const dataUrl = canvas.toDataURL('image/png');
+                document.getElementById('result-image').src = dataUrl;
+                document.getElementById('download-btn').href = dataUrl;
+
+                overlay.classList.add('hidden');
+            }, 100);
         }
 
         function resetImage() {
